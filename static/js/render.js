@@ -1,6 +1,6 @@
-function DrawOBJ(object) {
-	if (object.type == "cube") {
-		DrawCube(object);
+function DrawOBJ(object, projection) {
+	if (object.type == "Cube") {
+		DrawCube(object, projection);
 	}
 }
 
@@ -23,55 +23,68 @@ function DrawCircle(center, radius, filled=true, width=1) {
 	}
 }
 
-function DrawCube(object) {
+function RotatePoint(point, object) {
+	let rx = object.rx;
+	let ry = object.ry;
+	let rz = object.rz;
+	
+	let x1 = point.x;
+	let y1 = point.y * Math.cos(rx) - Math.sin(rx) * point.z;
+	let z1 = point.y * Math.sin(rx) + Math.cos(rx) * point.z;
+	// Y
+	let x2 = x1 * Math.cos(ry) + Math.sin(ry) * z1;
+	let y2 = y1;
+	let z2 = -Math.sin(ry) * x1 + Math.cos(ry) * z1;
+	
+	// Z
+	let x3 = Math.cos(rz) * x2 - Math.sin(rz) * y2;
+	let y3 = Math.sin(rz) * x2 + Math.cos(rz) * y2;
+	let z3 = z2;
+
+	return { x: x3 + object.x, y: y3 + object.y, z: z3 + object.y };
+}
+
+function DrawCube(object, projection) {
 	let points = [];
 	let p = object.size;
 	let m = -object.size;
 	let n = 50;
 
-	points.push({ x: object.x + m, y: object.y + m, z: object.z + m});
-	points.push({ x: object.x + p, y: object.y + m, z: object.z + m});
-	points.push({ x: object.x + m, y: object.y + p, z: object.z + m});
-	points.push({ x: object.x + p, y: object.y + p, z: object.z + m});
-	points.push({ x: object.x + m, y: object.y + m, z: object.z + p});
-	points.push({ x: object.x + p, y: object.y + m, z: object.z + p});
-	points.push({ x: object.x + m, y: object.y + p, z: object.z + p});
-	points.push({ x: object.x + p, y: object.y + p, z: object.z + p});
+	points.push({ x: m, y: m, z: m});
+	points.push({ x: p, y: m, z: m});
+	points.push({ x: m, y: p, z: m});
+	points.push({ x: p, y: p, z: m});
+	points.push({ x: m, y: m, z: p});
+	points.push({ x: p, y: m, z: p});
+	points.push({ x: m, y: p, z: p});
+	points.push({ x: p, y: p, z: p});
 
 
 	let out = [];
+	let focalLength = 500;
 	
 	for (const point of points) {
-		// Rotate
-		// X
-		let x1 = point.x;
-		let y1 = point.y * Math.cos(object.rx) - Math.sin(object.rx) * point.z;
-		let z1 = point.y * Math.sin(object.rx) + Math.cos(object.rx) * point.z;
-		// Y
-		let x2 = x1 * Math.cos(object.ry) + Math.sin(object.ry) * z1;
-		let y2 = y1;
-		let z2 = -Math.sin(object.ry) * x1 + Math.cos(object.ry) * z1;
-		
-		// Z
-		let x3 = Math.cos(object.rz) * x2 - Math.sin(object.rz) * y2;
-		let y3 = Math.sin(object.rz) * x2 + Math.cos(object.rz) * y2;
-		let z3 = z2;
+		let rotated = RotatePoint(point, object);
 
-		
-		// Perspective
+		if(projection == "Perspective") {
+			let scale = focalLength / (rotated.z + focalLength);
+			let out_x = rotated.x * scale + width / 2;
+			let out_y = rotated.y * scale + height / 2;
+			
+			out.push({x: out_x, y: out_y});
+			
+			DrawCircle({x: out_x, y: out_y}, 3, true)
+		} else if(projection == "Orthographic") {
+			let out_x = rotated.x + width / 2;
+			let out_y = rotated.y + height / 2;
+			
+			out.push({x: out_x, y: out_y});
+			
+			DrawCircle({x: out_x, y: out_y}, 3, true)
+		} else {
+			console.error(projection)
+		}
 
-		/*
-		let x = (point.x * n) / point.z;
-		let y = (point.y * n) / point.z;
-		*/
-
-		// Ortho
-		let out_x = x3 + width/2;
-		let out_y = y3 + height/2;
-
-		out.push({x: out_x, y: out_y});
-		
-		DrawCircle({x: out_x, y: out_y}, 3, true)
 	}
 
 	// Connections:

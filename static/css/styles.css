@@ -1,4 +1,19 @@
-body {
-	margin: 0;
-	padding: 0;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Adjust the gap between items */
+}
+
+.slider-container, .dropdown-container {
+  flex: 1 1 calc(33.33% - 10px); /* Adjust width of each container */
+  display: flex;
+  align-items: center;
+}
+
+.slider {
+  width: 100%;
+}
+
+.dropdown {
+  width: 100%;
 }

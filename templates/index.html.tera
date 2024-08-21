@@ -11,9 +11,33 @@
 	</head>
 	<body>
 		<canvas class="game_canvas"></canvas>
-		<input type="range" id="x_rot" value="0" min="0" max="10">
-		<input type="range" id="y_rot" value="0" min="0" max="10">
-		<input type="range" id="z_rot" value="0" min="0" max="10">
+		<div class="container">
+	    <!-- Sliders -->
+	    <div class="slider-container">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="x_rot">
+	    </div>
+	    <div class="slider-container">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="y_rot">
+	    </div>
+	    <div class="slider-container">
+	        <input type="range" min="0" max="10" value="50" class="slider" id="z_rot">
+	    </div>
+	
+	    <!-- Dropdowns -->
+	    <div class="dropdown-container">
+	        <select class="dropdown" id="shape">
+	            <option>Cube</option>
+	            <option>Pyramid</option>
+	            <option>Prism</option>
+	        </select>
+	    </div>
+	    <div class="dropdown-container">
+	        <select class="dropdown" id="projection">
+	            <option>Perspective</option>
+	            <option>Orthographic</option>
+	        </select>
+	    </div>
+		</div>
 		<script src="/static/js/preload.js"></script>
 		<script src="/static/js/render.js"></script>
 		<script src="/static/js/script.js"></script>
