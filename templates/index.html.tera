@@ -28,7 +28,6 @@
 	        <select class="dropdown" id="shape">
 	            <option>Cube</option>
 	            <option>Pyramid</option>
-	            <option>Prism</option>
 	        </select>
 	    </div>
 	    <div class="dropdown-container">

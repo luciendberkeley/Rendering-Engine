@@ -41,7 +41,7 @@ function RotatePoint(point, object) {
 	let y3 = Math.sin(rz) * x2 + Math.cos(rz) * y2;
 	let z3 = z2;
 
-	return { x: x3 + object.x, y: y3 + object.y, z: z3 + object.y };
+	return { x: x3 + object.x + player.x, y: y3 + object.y + player.y, z: z3 + object.y + player.z };
 }
 
 function DrawCube(object, projection) {
@@ -59,6 +59,7 @@ function DrawCube(object, projection) {
 	points.push({ x: m, y: p, z: p});
 	points.push({ x: p, y: p, z: p});
 
+	
 
 	let out = [];
 	let focalLength = 500;

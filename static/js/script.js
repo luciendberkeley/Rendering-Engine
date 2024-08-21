@@ -1,4 +1,4 @@
-let player = { x: 0, y: 0, z: 0 };
+let player = { x: 0, y: 0, z: 0, rx: 0, ry: 0, rz: 0 };
 let objects = [];
 
 let x_rot_slider = document.getElementById("x_rot");
@@ -8,10 +8,13 @@ let z_rot_slider = document.getElementById("z_rot");
 let shape_selector = document.getElementById("shape");
 let projection_selector = document.getElementById("projection");
 
+let speed = 300;
+
 objects.push({ type: "Cube", x: 0, y: 0, z: 500, size: 100, rx: 0.000001, ry: 0.0000001, rz: 0, color: "black" });
 
 let shape = shape_selector.value;
 let projection = projection_selector.value;
+
 
 function Start() {
 	console.log("Start");
@@ -22,6 +25,25 @@ function Update() {
 		shape = shape_selector.value;
 		objects = [];
 		objects.push({ type: shape, x: 0, y: 0, z: 500, size: 100, rx: 0.000001, ry: 0.0000001, rz: 0, color: "black" });
+	}
+
+	if(GetKey("w")) {
+		player.z -= speed * deltaTime;
+	}
+	if(GetKey("s")) {
+		player.z += speed * deltaTime;
+	}
+	if(GetKey("a")) {
+		player.x += speed * deltaTime;
+	}
+	if(GetKey("d")) {
+		player.x -= speed * deltaTime;
+	}
+	if(GetKey("e")) {
+		player.y += speed * deltaTime;
+	}
+	if(GetKey("q")) {
+		player.y -= speed * deltaTime;
 	}
 
 	projection = projection_selector.value;
