@@ -11,6 +11,18 @@ function DrawLine(p1, p2) {
 	ctx.stroke(); 
 }
 
+function DrawCircle(center, radius, filled=true, width=1) {
+	ctx.lineWidth = width;
+
+	ctx.beginPath();
+	ctx.arc(center.x, center.y, radius, 0, 2 * Math.PI);
+	if(filled == true) {
+		ctx.fill();
+	} else {
+		ctx.stroke();
+	}
+}
+
 function DrawCube(object) {
 	let points = [];
 	let p = object.size;
@@ -26,25 +38,24 @@ function DrawCube(object) {
 	points.push({ x: object.x + m, y: object.y + p, z: object.z + p});
 	points.push({ x: object.x + p, y: object.y + p, z: object.z + p});
 
-	console.log(points);
 
 	let out = [];
 	
 	for (const point of points) {
 		// Rotate
 		// X
-		let x = point.x;
-		let y = point.y * Math.cos(object.rx) - Math.sin(object.rx) * point.z;
-		let z = point.y * Math.sin(object.rx) + Math.cos(object.rx) * point.z;
+		let x1 = point.x;
+		let y1 = point.y * Math.cos(object.rx) - Math.sin(object.rx) * point.z;
+		let z1 = point.y * Math.sin(object.rx) + Math.cos(object.rx) * point.z;
 		// Y
-		x = x * Math.cos(object.ry) + Math.sin(object.ry) * z;
-		y = y;
-		z = -Math.sin(object.ry) * x + Math.cos(object.ry) * z;
+		let x2 = x1 * Math.cos(object.ry) + Math.sin(object.ry) * z1;
+		let y2 = y1;
+		let z2 = -Math.sin(object.ry) * x1 + Math.cos(object.ry) * z1;
 		
 		// Z
-		x = Math.cos(object.rz) * x + -Math.sin(object.rz) * y;
-		y = Math.sin(object.rz) * x + Math.cos(object.rz) * y;
-		z = z;
+		let x3 = Math.cos(object.rz) * x2 - Math.sin(object.rz) * y2;
+		let y3 = Math.sin(object.rz) * x2 + Math.cos(object.rz) * y2;
+		let z3 = z2;
 
 		
 		// Perspective
@@ -55,13 +66,12 @@ function DrawCube(object) {
 		*/
 
 		// Ortho
-		let out_x = x + 300;
-		let out_y = y + 300;
+		let out_x = x3 + width/2;
+		let out_y = y3 + height/2;
 
 		out.push({x: out_x, y: out_y});
 		
-		ctx.fillRect(out_x - 1, out_y - 1, 3, 3);
-		console.log(out_x, out_y);
+		DrawCircle({x: out_x, y: out_y}, 3, true)
 	}
 
 	// Connections:
