@@ -20,7 +20,7 @@
 	        <input type="range" min="0" max="100" value="50" class="slider" id="y_rot">
 	    </div>
 	    <div class="slider-container">
-	        <input type="range" min="0" max="10" value="50" class="slider" id="z_rot">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="z_rot">
 	    </div>
 	
 	    <!-- Dropdowns -->

@@ -1,6 +1,8 @@
 function DrawOBJ(object, projection) {
 	if (object.type == "Cube") {
 		DrawCube(object, projection);
+	} else if(object.type == "Pyramid") {
+		DrawPyramid(object, projection);
 	}
 }
 
@@ -116,4 +118,70 @@ function DrawCube(object, projection) {
 	DrawLine(out[1], out[5]);
 	DrawLine(out[2], out[6]);
 	DrawLine(out[3], out[7]);
+}
+
+function DrawPyramid(object, projection) {
+	let points = [];
+	let p = object.size;
+	let m = -object.size;
+	let n = 50;
+
+	points.push({ x: m, y: m, z: m});
+	points.push({ x: p, y: m, z: m});
+	points.push({ x: m, y: p, z: m});
+	points.push({ x: p, y: p, z: m});
+	points.push({ x: 0, y: 0, z: 2*p});
+
+	
+
+	let out = [];
+	let focalLength = 500;
+	
+	for (const point of points) {
+		let rotated = RotatePoint(point, object);
+
+		if(projection == "Perspective") {
+			let scale = focalLength / (rotated.z + focalLength);
+			let out_x = rotated.x * scale + width / 2;
+			let out_y = rotated.y * scale + height / 2;
+			
+			out.push({x: out_x, y: out_y});
+			
+			DrawCircle({x: out_x, y: out_y}, 3, true)
+		} else if(projection == "Orthographic") {
+			let out_x = rotated.x + width / 2;
+			let out_y = rotated.y + height / 2;
+			
+			out.push({x: out_x, y: out_y});
+			
+			DrawCircle({x: out_x, y: out_y}, 3, true)
+		} else {
+			console.error(projection)
+		}
+
+	}
+
+	/*
+	Connections:
+	0, 1
+	0, 2
+	2, 3
+	1, 3
+
+	0, 4
+	1, 4
+	2, 4
+	3, 4
+	*/
+
+	DrawLine(out[0], out[1]);
+	DrawLine(out[0], out[2]);
+	DrawLine(out[2], out[3]);
+	DrawLine(out[1], out[3]);
+
+	DrawLine(out[0], out[4]);
+	DrawLine(out[1], out[4]);
+	DrawLine(out[2], out[4]);
+	DrawLine(out[3], out[4]);
+
 }
