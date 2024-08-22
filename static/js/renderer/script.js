@@ -15,6 +15,24 @@ objects.push({ type: "Cube", x: 0, y: 0, z: 500, size: 100, rx: 0.000001, ry: 0.
 let shape = shape_selector.value;
 let projection = projection_selector.value;
 
+let mouseDown = false;
+
+document.addEventListener("mousedown", (event) => {
+	mouseDown = true;
+});
+
+document.addEventListener("mouseup", (event) => {
+	mouseDown = false;
+});
+
+document.addEventListener("mousemove", (event) => {
+	console.log(`X: ${event.movementX}, Y: ${event.movementY}`);
+	if(mouseDown) {
+		objects[0].rx -= Math.abs(event.movementY / 300);
+		objects[0].ry += Math.abs(event.movementX / 300);
+	}
+});
+
 
 function Start() {
 	console.log("Start");

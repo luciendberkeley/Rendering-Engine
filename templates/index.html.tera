@@ -6,21 +6,21 @@
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
 		/>
-		<title>3d Game Engine</title>
-		<link rel="stylesheet" href="/static/css/styles.css" />
+		<title>Renderer</title>
+		<link rel="stylesheet" href="/static/css/renderer/styles.css" />
 	</head>
 	<body>
 		<canvas class="game_canvas"></canvas>
 		<div class="container">
 	    <!-- Sliders -->
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="50" class="slider" id="x_rot">
+	        <input type="range" min="0" max="100" value="0" class="slider" id="x_rot">
 	    </div>
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="50" class="slider" id="y_rot">
+	        <input type="range" min="0" max="100" value="0" class="slider" id="y_rot">
 	    </div>
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="50" class="slider" id="z_rot">
+	        <input type="range" min="0" max="100" value="0" class="slider" id="z_rot">
 	    </div>
 	
 	    <!-- Dropdowns -->
@@ -37,9 +37,9 @@
 	        </select>
 	    </div>
 		</div>
-		<script src="/static/js/preload.js"></script>
-		<script src="/static/js/render.js"></script>
-		<script src="/static/js/script.js"></script>
-		<script src="/static/js/helper.js"></script>
+		<script src="/static/js/renderer/preload.js"></script>
+		<script src="/static/js/renderer/render.js"></script>
+		<script src="/static/js/renderer/script.js"></script>
+		<script src="/static/js/renderer/helper.js"></script>
 	</body>
 </html>
