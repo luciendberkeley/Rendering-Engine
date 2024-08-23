@@ -14,13 +14,13 @@
 		<div class="container">
 	    <!-- Sliders -->
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="0" class="slider" id="x_rot">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="x_rot">
 	    </div>
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="0" class="slider" id="y_rot">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="y_rot">
 	    </div>
 	    <div class="slider-container">
-	        <input type="range" min="0" max="100" value="0" class="slider" id="z_rot">
+	        <input type="range" min="0" max="100" value="50" class="slider" id="z_rot">
 	    </div>
 	
 	    <!-- Dropdowns -->
@@ -28,6 +28,7 @@
 	        <select class="dropdown" id="shape">
 	            <option>Cube</option>
 	            <option>Pyramid</option>
+	            <option>Prism</option>
 	        </select>
 	    </div>
 	    <div class="dropdown-container">
